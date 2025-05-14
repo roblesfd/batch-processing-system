@@ -1,0 +1,60 @@
+
+1. Inmutabilidad
+    - final
+    - String
+    - Optional
+    - List.of
+    - Math
+    - Time API
+    - Enums
+    - Records
+        - Validation and data scrubbing
+        - Increase immutability
+        - Modified copies
+        - Optional data handling
+        - Serializing
+        - Pattern matching
+        - Simular Algebraic Data Types con sealed interfaces
+2. Streams
+    - Primitive streams
+    - Iterative streams
+    - Infinite streams
+    - From arrays to streams
+    - Working with File I/O
+    - Dealing with Date and Time
+    - Collectors
+3. Parallel data processing with streams
+    - Parallel functional pipelines
+    - Parallel stream checklist
+4. Funciones de order superior
+    - Lambdas
+    - Funciones como parametros (map. filter, flatMap)
+    - Interfaces funcionales
+5. Composicion de funciones
+    - andThen
+    - compose con Function<T,R>
+6. Procesamiento de datos con streams
+7. Optionals como reemplazo de null
+    - Con streams
+    - Evitar null
+    - Encadenamiento y composicion segura
+8. Manejo funcional de errores
+    - Not throwing exceptions
+    - Errors as values
+    - The Try/Success/Failure pattern
+9. Lazy evaluation
+    - Functional implementation
+    - Supplier<T>
+    - Delayed executions with thunks
+    - Tareas asincrona con estilo funcional
+    - Design async pipelines con CompletableFutures
+    - Manual creation and completion
+10. Design patterns
+    - Factory
+    - Decorator
+    - Strategy
+    - Builder
+12. Monads y Functors
+13. Type classes
+14. Partial application y currying
+15. Referential transparency
