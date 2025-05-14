@@ -2,15 +2,17 @@ package org.fernandodev;
 
 import org.fernandodev.core.BatchRunner;
 import org.fernandodev.core.registry.TransformerRegistry;
+import org.fernandodev.utils.DatabaseConfig;
 
 import java.io.File;
 import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.DriverManager;
 
 public class Main {
     public static void main(String[] args) throws Exception {
         String inputPath = Paths.get("src/main/resources").toAbsolutePath().toString();
         String outputPath = Paths.get("output").toAbsolutePath().toString();
-
         BatchRunner runner = new BatchRunner(inputPath, outputPath);
         runner.run();
 
