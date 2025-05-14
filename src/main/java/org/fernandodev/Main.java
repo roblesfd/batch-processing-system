@@ -1,20 +1,17 @@
 package org.fernandodev;
 
-import org.fernandodev.core.BatchRunner;
+import org.fernandodev.core.observers.DirectoryWatcher;
 import org.fernandodev.core.registry.TransformerRegistry;
-import org.fernandodev.utils.DatabaseConfig;
 
 import java.io.File;
 import java.nio.file.Paths;
-import java.sql.Connection;
-import java.sql.DriverManager;
 
 public class Main {
     public static void main(String[] args) throws Exception {
         String inputPath = Paths.get("src/main/resources").toAbsolutePath().toString();
         String outputPath = Paths.get("output").toAbsolutePath().toString();
-        BatchRunner runner = new BatchRunner(inputPath, outputPath);
-        runner.run();
+        DirectoryWatcher watcher = new DirectoryWatcher(inputPath, outputPath);
+        watcher.start();
 
         //Conversion de tipos de archivo
         //csv - json OK

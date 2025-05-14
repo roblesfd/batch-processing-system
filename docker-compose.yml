@@ -4,8 +4,8 @@ services:
     image: postgres:17
     container_name: batch_postgres
     restart: always
-      - "5432:5432"
     ports:
+      - "5432:5432"
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}

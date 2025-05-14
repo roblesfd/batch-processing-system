@@ -1,23 +1,22 @@
 ## ✅ Funcionalidades principales (mínimas)
 
-- [ ] **Lectura de archivos por lotes**  
-  - [ ] Leer todos los archivos en un directorio
-  - [ ] Leer su contenido como stream (inmutable)
+- [-] **Lectura de archivos por lotes**  
+  - [-] Leer todos los archivos en un directorio
+  - [-] Leer su contenido como stream (inmutable)
 
-- [ ] **Validación funcional de datos**  
-  - [ ] Validar formato por archivo (`isValidCSV`, `isValidJSON`)  
-  - [ ] Validar contenido por línea o registro  
-  - [ ] Devolver `Result` o `Either` para procesar solo los válidos
+- [-] **Validación funcional de datos**  
+  - [-] Validar formato por archivo (`isValidCSV`, `isValidJSON`)  
+  - [-] Validar contenido por línea o registro  
 
-- [ ] **Transformación funcional**  
-  - [ ] Convertir contenido (ej. JSON a objeto, CSV a JSON)  
+- [-] **Transformación funcional**  
+  - [-] Convertir contenido (ej. JSON a objeto, CSV a JSON)  
   - [ ] Aplicar reglas de negocio como funciones puras
 
-- [ ] **Procesamiento por tipo de archivo**  
-  - [ ] Crear un *dispatcher funcional* según extensión
+- [-] **Procesamiento por tipo de archivo**  
+  - [-] Crear un *dispatcher funcional* según extensión
 
-- [ ] **Almacenamiento o persistencia**  
-  - [ ] Exportar los datos procesados (base de datos, archivos)  
+- [-] **Almacenamiento o persistencia**  
+  - [-] Exportar los datos procesados (base de datos, archivos)  
   - [ ] Pasar funciones de persistencia como argumentos (FP)
 
 - [ ] **Reporte funcional**  
@@ -46,6 +45,6 @@
 - [ ] **Manejo funcional de errores**  
   - [ ] Usar estructuras como `Result`, `Either`, etc. para control de flujo
 
-- [ ] **Modo observador funcional (stream de cambios)**  
-  - [ ] Observar una carpeta y disparar procesamiento cuando hay nuevos archivos  
+- [-] **Modo observador funcional (stream de cambios)**  
+  - [-] Observar una carpeta y disparar procesamiento cuando hay nuevos archivos  
   - [ ] Encapsular efectos secundarios en funciones puras
