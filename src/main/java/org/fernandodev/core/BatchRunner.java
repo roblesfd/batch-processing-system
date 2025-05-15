@@ -6,7 +6,11 @@ import org.fernandodev.repositories.ProcessingResultRepository;
 import java.io.File;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.Optional;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class BatchRunner {
     private final String inputPath;
@@ -19,37 +23,54 @@ public class BatchRunner {
         this.repository = new ProcessingResultRepository();
     }
 
-    public void run(){
+    public void run() {
         File inputDir = new File(inputPath);
         if(!inputDir.exists() || !inputDir.isDirectory()) {
-            System.err.println("Directorio de entrada no válido");
+            System.err.println("❌ Directorio de entrada no válido");
             return;
         }
 
         File[] files = inputDir.listFiles();
         if(files == null || files.length == 0) {
-            System.out.println("No hay archivos para procesar");
+            System.out.println("ℹ\uFE0F No hay archivos para procesar");
             return;
         }
 
-        for(File file: files) {
-            String extension = getFileExtension(file.getName());
-            Optional<ProcessingResult> resultOpt = ValidatorFactory.getValidator(extension)
-                    .filter(validator -> validator.isValid(file))
-                    .flatMap(valid -> ProcessorFactory.getProcessor(extension))
-                    .map(processor -> processor.process(file));
+        List<CompletableFuture<Void>> futures;
+        try (ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors())) {
 
-            if (resultOpt.isPresent()) {
-                System.out.printf("✅ [%s] %s%n", file.getName(), resultOpt.get().message());
-                this.repository.save(file.getName(), "SUCCESS", resultOpt.get().message(), LocalDateTime.now());
-            } else {
-                System.out.printf("❌ [%s] Formato inválido o tipo no soportado.%n", file.getName());
-                this.repository.save(file.getName(), "FAILED", "Formato inválido o tipo no soportado", LocalDateTime.now());
-            }
+            futures = Arrays.stream(files)
+                    .map(file -> CompletableFuture.supplyAsync(() -> processFile(file), executor)
+                            .thenAccept(result -> {
+                                if (result != null) {
+                                    System.out.printf("✅ [%s] %s%n", file.getName(), result.message());
+                                    repository.save(file.getName(), "SUCCESS", result.message(), LocalDateTime.now());
+                                } else {
+                                    System.out.printf("❌ [%s] Formato invalido o  tipo no soportado. %n", file.getName());
+                                    repository.save(file.getName(), "FAILED", "Formato invalido o tipo no soportado", LocalDateTime.now());
+                                }
+                            })
+                            .exceptionally(ex -> {
+                                System.err.printf("❌ [%s] Error de procesamiento: %s%n", file.getName(), ex.getMessage());
+                                repository.save(file.getName(), "ERROR", ex.getMessage(), LocalDateTime.now());
+                                return null;
+                            }))
+                    .toList();
         }
+
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
     }
 
-    private String getFileExtension(String name){
+    private ProcessingResult processFile(File file) {
+        String extension = getFileExtension(file.getName());
+        return ValidatorFactory.getValidator(extension)
+                .filter(validator -> validator.isValid(file))
+                .flatMap(valid -> ProcessorFactory.getProcessor(extension))
+                .map(processor -> processor.process(file))
+                .orElse(null);
+    }
+
+    private String getFileExtension(String name) {
         int index = name.lastIndexOf(".");
         return index != -1 ? name.substring(index+1).toLowerCase() : "";
     }

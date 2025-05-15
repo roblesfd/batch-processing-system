@@ -20,7 +20,7 @@ public class DirectoryWatcher {
     public void start() throws IOException, InterruptedException {
         try(WatchService watchService = FileSystems.getDefault().newWatchService()) {
             inputPath.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
-            System.out.println("Observando carpeta: " +inputPath.toAbsolutePath());
+            System.out.println("Observando carpeta: " + inputPath.toAbsolutePath());
             while (true) {
                 WatchKey key = watchService.take();
                 for (WatchEvent<?> event : key.pollEvents()) {
@@ -32,7 +32,6 @@ public class DirectoryWatcher {
 
                     WatchEvent<Path> ev = cast(event);
                     Path filename = ev.context();
-                    Path fullPath = inputPath.resolve(filename);
 
                     System.out.printf("📄 Nuevo archivo detectado: %s%n", filename);
 
