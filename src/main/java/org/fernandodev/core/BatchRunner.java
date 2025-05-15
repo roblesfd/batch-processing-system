@@ -41,20 +41,8 @@ public class BatchRunner {
 
             futures = Arrays.stream(files)
                     .map(file -> CompletableFuture.supplyAsync(() -> processFile(file), executor)
-                            .thenAccept(result -> {
-                                if (result != null) {
-                                    System.out.printf("✅ [%s] %s%n", file.getName(), result.message());
-                                    repository.save(file.getName(), "SUCCESS", result.message(), LocalDateTime.now());
-                                } else {
-                                    System.out.printf("❌ [%s] Formato invalido o  tipo no soportado. %n", file.getName());
-                                    repository.save(file.getName(), "FAILED", "Formato invalido o tipo no soportado", LocalDateTime.now());
-                                }
-                            })
-                            .exceptionally(ex -> {
-                                System.err.printf("❌ [%s] Error de procesamiento: %s%n", file.getName(), ex.getMessage());
-                                repository.save(file.getName(), "ERROR", ex.getMessage(), LocalDateTime.now());
-                                return null;
-                            }))
+                            .thenAccept(result -> handleResult(result, file))
+                            .exceptionally(ex -> handleProcessingError(file, ex)))
                     .toList();
         }
 
@@ -73,5 +61,21 @@ public class BatchRunner {
     private String getFileExtension(String name) {
         int index = name.lastIndexOf(".");
         return index != -1 ? name.substring(index+1).toLowerCase() : "";
+    }
+
+    private void handleResult(ProcessingResult result, File file) {
+        if (result != null) {
+            System.out.printf("✅ [%s] %s%n", file.getName(), result.message());
+            repository.save(file.getName(), "SUCCESS", result.message(), LocalDateTime.now());
+        } else {
+            System.out.printf("❌ [%s] Formato invalido o  tipo no soportado. %n", file.getName());
+            repository.save(file.getName(), "FAILED", "Formato invalido o tipo no soportado", LocalDateTime.now());
+        }
+    }
+
+    private Void handleProcessingError(File file, Throwable ex) {
+        System.err.printf("[%s] Error de procesamiento: %s%n", file.getName(), ex.getMessage());
+        repository.save(file.getName(), "ERROR", ex.getMessage(), LocalDateTime.now());
+        return null;
     }
 }
