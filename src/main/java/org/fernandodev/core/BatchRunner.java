@@ -25,16 +25,8 @@ public class BatchRunner {
 
     public void run() {
         File inputDir = new File(inputPath);
-        if(!inputDir.exists() || !inputDir.isDirectory()) {
-            System.err.println("❌ Directorio de entrada no válido");
-            return;
-        }
-
-        File[] files = inputDir.listFiles();
-        if(files == null || files.length == 0) {
-            System.out.println("ℹ\uFE0F No hay archivos para procesar");
-            return;
-        }
+        File[] files = null;
+        verifyIfValidDirectory(inputDir, files);
 
         List<CompletableFuture<Void>> futures;
         try (ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors())) {
@@ -47,6 +39,19 @@ public class BatchRunner {
         }
 
         CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+    }
+
+    private void verifyIfValidDirectory(File inputDir, File[] files) {
+        if(!inputDir.exists() || !inputDir.isDirectory()) {
+            System.err.println("❌ Directorio de entrada no válido");
+            return;
+        }
+
+        files = inputDir.listFiles();
+        if(files == null || files.length == 0) {
+            System.out.println("ℹ\uFE0F No hay archivos para procesar");
+            return;
+        }
     }
 
     private ProcessingResult processFile(File file) {

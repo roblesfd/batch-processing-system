@@ -1,4 +1,4 @@
-package org.fernandodev.core;
+package org.fernandodev.processors;
 
 import org.fernandodev.model.ProcessingResult;
 

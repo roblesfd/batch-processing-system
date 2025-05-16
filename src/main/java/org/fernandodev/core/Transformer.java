@@ -19,5 +19,4 @@ public class Transformer<T> {
         JsonNode data = parser.parse(inputFile);
         writer.write(data, outputFile);
     }
-
 }

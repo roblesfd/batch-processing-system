@@ -1,7 +1,6 @@
 package org.fernandodev.validators;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.fernandodev.core.FileValidator;
 
 import java.io.File;
 import java.io.IOException;

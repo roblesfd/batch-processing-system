@@ -1,4 +1,4 @@
-package org.fernandodev.core;
+package org.fernandodev.validators;
 
 import java.io.File;
 

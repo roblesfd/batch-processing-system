@@ -10,10 +10,6 @@ import java.util.Set;
 public class PluginRegistry {
     private static final Map<String, Plugin> plugins = new HashMap<>();
 
-    static {
-
-    }
-
     public static Optional<Plugin> get(String name) {
         return Optional.ofNullable(plugins.get(name));
     }

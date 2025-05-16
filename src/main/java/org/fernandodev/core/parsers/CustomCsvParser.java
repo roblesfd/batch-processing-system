@@ -20,7 +20,9 @@ public class CustomCsvParser implements Parser {
     @Override
     public JsonNode parse(File file) throws IOException {
         Iterator<Map<String, String>> iterator =
-                csvMapper.readerFor(Map.class).with(schema).readValues(new FileInputStream(file));
+                csvMapper.readerFor(Map.class)
+                         .with(schema)
+                         .readValues(new FileInputStream(file));
 
         ArrayNode arrayNode = new ObjectMapper().createArrayNode();
         while (iterator.hasNext()) {

@@ -1,7 +1,6 @@
 package org.fernandodev.cli;
 
 import org.fernandodev.core.BatchRunner;
-import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 

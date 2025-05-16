@@ -2,7 +2,6 @@ package org.fernandodev.validators;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 
-import org.fernandodev.core.FileValidator;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;

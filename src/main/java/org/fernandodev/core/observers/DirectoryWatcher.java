@@ -23,26 +23,7 @@ public class DirectoryWatcher {
             System.out.println("Observando carpeta: " + inputPath.toAbsolutePath());
             while (true) {
                 WatchKey key = watchService.take();
-                for (WatchEvent<?> event : key.pollEvents()) {
-                    WatchEvent.Kind<?> kind = event.kind();
-
-                    if (kind == StandardWatchEventKinds.OVERFLOW) {
-                        continue;
-                    }
-
-                    WatchEvent<Path> ev = cast(event);
-                    Path filename = ev.context();
-
-                    System.out.printf("📄 Nuevo archivo detectado: %s%n", filename);
-
-                    executor.submit(() -> {
-                        try {
-                            new BatchRunner(inputPath.toString(), outputPath).run();
-                        } catch (Exception e) {
-                            System.err.printf("❌ Error al procesar el archivo %s: %s%n", filename, e.getMessage());
-                        }
-                    });
-                }
+                processNewEvent(key);//Si se agrega un archivo al dir observado, lo procesa
 
                 boolean valid = key.reset();
                 if (!valid) break;
@@ -55,5 +36,30 @@ public class DirectoryWatcher {
 
     private static WatchEvent<Path> cast(WatchEvent<?> event) {
         return (WatchEvent<Path>) event;
+    }
+
+    private void processNewEvent(WatchKey key) {
+        for (WatchEvent<?> event : key.pollEvents()) {
+            WatchEvent.Kind<?> kind = event.kind();
+
+            if (kind == StandardWatchEventKinds.OVERFLOW) {continue;}
+
+            WatchEvent<Path> ev = cast(event);
+            Path filename = ev.context();
+
+            System.out.printf("📄 Nuevo archivo detectado: %s%n", filename);
+
+            processFileAsync(filename);
+        }
+    }
+
+    private void processFileAsync(Path filename){
+        executor.submit(() -> {
+            try {
+                new BatchRunner(inputPath.toString(), outputPath).run();
+            } catch (Exception e) {
+                System.err.printf("❌ Error al procesar el archivo %s: %s%n", filename, e.getMessage());
+            }
+        });
     }
 }

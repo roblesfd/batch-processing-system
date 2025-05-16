@@ -1,6 +1,7 @@
 package org.fernandodev.core;
 
 import org.fernandodev.processors.CsvProcessor;
+import org.fernandodev.processors.FileProcessor;
 import org.fernandodev.processors.JsonProcessor;
 import org.fernandodev.processors.XmlProcessor;
 

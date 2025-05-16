@@ -20,6 +20,8 @@ public class CsvWriter implements Writer {
     public void write(JsonNode data, File outputFile) throws IOException {
         ArrayNode array = null;
 
+        //Evalua si data es array o object y extrae un ArrayNode en array
+//        extractArrayNode(data, array);
         if (data.isArray()) {
             array = (ArrayNode) data;
         } else if (data.isObject() && data.size() == 1) {
@@ -48,16 +50,36 @@ public class CsvWriter implements Writer {
             return;
         }
 
-        // Construir schema desde el primer objeto aplanado
-        ObjectNode first = (ObjectNode) flattenedArray.get(0);
-        CsvSchema.Builder schemaBuilder = CsvSchema.builder();
-        first.fieldNames().forEachRemaining(schemaBuilder::addColumn);
-        CsvSchema schema = schemaBuilder.setUseHeader(true).build();
+        // Construir el schema desde el primer objeto aplanado
+        CsvSchema schema = buildSchemaFromFlatObject(flattenedArray);
 
         // Escribir el archivo
         csvMapper.writerFor(JsonNode.class)
                 .with(schema)
                 .writeValue(outputFile, flattenedArray);
+    }
+
+    private void extractArrayNode(JsonNode data, ArrayNode array){
+        if (data.isArray()) {
+            array = (ArrayNode) data;
+        } else if (data.isObject() && data.size() == 1) {
+            JsonNode possibleArray = data.elements().next();
+            if (possibleArray.isArray()) {
+                array = (ArrayNode) possibleArray;
+            }
+        }
+
+        if (array == null || array.isEmpty()) {
+            System.out.println("⚠️ Nada que escribir: no se encontró un array de objetos.");
+            return;
+        }
+    }
+
+    private CsvSchema buildSchemaFromFlatObject(ArrayNode flattenedArray){
+        ObjectNode first = (ObjectNode) flattenedArray.get(0);
+        CsvSchema.Builder schemaBuilder = CsvSchema.builder();
+        first.fieldNames().forEachRemaining(schemaBuilder::addColumn);
+        return schemaBuilder.setUseHeader(true).build();
     }
 
     private ObjectNode flatten(ObjectNode node) {

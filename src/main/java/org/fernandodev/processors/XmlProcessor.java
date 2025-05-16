@@ -1,7 +1,6 @@
 package org.fernandodev.processors;
 
 
-import org.fernandodev.core.FileProcessor;
 import org.fernandodev.model.ProcessingResult;
 
 import java.io.File;

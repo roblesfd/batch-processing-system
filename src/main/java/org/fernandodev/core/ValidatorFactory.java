@@ -1,6 +1,7 @@
 package org.fernandodev.core;
 
 import org.fernandodev.validators.CsvValidator;
+import org.fernandodev.validators.FileValidator;
 import org.fernandodev.validators.JsonValidator;
 import org.fernandodev.validators.XmlValidator;
 

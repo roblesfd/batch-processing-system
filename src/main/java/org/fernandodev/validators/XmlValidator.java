@@ -1,7 +1,5 @@
 package org.fernandodev.validators;
 
-import org.fernandodev.core.FileValidator;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
