@@ -1,19 +1,19 @@
 ## ✅ Funcionalidades principales (mínimas)
 
-- [-] **Lectura de archivos por lotes**  
-  - [-] Leer todos los archivos en un directorio
-  - [-] Leer su contenido como stream (inmutable)
+- [x] **Lectura de archivos por lotes**  
+  - [x] Leer todos los archivos en un directorio
+  - [x] Leer su contenido como stream (inmutable)
 
-- [-] **Validación funcional de datos**  
-  - [-] Validar formato por archivo (`isValidCSV`, `isValidJSON`)  
-  - [-] Validar contenido por línea o registro  
+- [x] **Validación funcional de datos**  
+  - [x] Validar formato por archivo (`isValidCSV`, `isValidJSON`)  
+  - [x] Validar contenido por línea o registro  
 
-- [-] **Transformación funcional**  
-  - [-] Convertir contenido (ej. JSON a objeto, CSV a JSON)  
+- [x] **Transformación funcional**  
+  - [x] Convertir contenido (ej. JSON a objeto, CSV a JSON)  
   - [ ] Aplicar reglas de negocio como funciones puras
 
-- [-] **Procesamiento por tipo de archivo**  
-  - [-] Crear un *dispatcher funcional* según extensión
+- [x] **Procesamiento por tipo de archivo**  
+  - [x] Crear un *dispatcher funcional* según extensión
 
 - [-] **Almacenamiento o persistencia**  
   - [-] Exportar los datos procesados (base de datos, archivos)  
@@ -27,8 +27,8 @@
 
 ## 🚀 Funcionalidades avanzadas
 
-- [ ] **Procesamiento paralelo o asincrónico funcional**  
-  - [ ] Usar librerías como `RxJS` (JS) o `Streams` / `CompletableFuture` (Java) sin romper la inmutabilidad
+- [x] **Procesamiento paralelo o asincrónico funcional**  
+  - [x] Usar librerías como `RxJS` (JS) o `Streams` / `CompletableFuture` (Java) sin romper la inmutabilidad
 
 - [ ] **Detección de duplicados o registros inválidos**  
   - [ ] Aplicar funciones puras de filtro y reducción
@@ -39,12 +39,12 @@
 - [ ] **Sistema de plugins funcionales**  
   - [ ] Permitir funciones externas del tipo `(data) => transformedData` como plugins
 
-- [ ] **Pipelines composables**  
-  - [ ] Componer pasos del procesamiento como un pipeline
+- [x] **Pipelines composables**  
+  - [x] Componer pasos del procesamiento como un pipeline
 
 - [ ] **Manejo funcional de errores**  
   - [ ] Usar estructuras como `Result`, `Either`, etc. para control de flujo
 
-- [-] **Modo observador funcional (stream de cambios)**  
-  - [-] Observar una carpeta y disparar procesamiento cuando hay nuevos archivos  
-  - [ ] Encapsular efectos secundarios en funciones puras
+- [x] **Modo observador funcional (stream de cambios)**  
+  - [x] Observar una carpeta y disparar procesamiento cuando hay nuevos archivos  
+  - [x] Encapsular efectos secundarios en funciones puras

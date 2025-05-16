@@ -8,6 +8,7 @@ import org.fernandodev.core.writers.XmlWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 public class WriterRegistry {
     private static final Map<String, Writer> writers = new HashMap<>();
@@ -20,5 +21,9 @@ public class WriterRegistry {
 
     public static Optional<Writer> getWriter(String extension){
         return Optional.ofNullable(writers.get(extension.toLowerCase()));
+    }
+
+    public static Set<String> getSupportedExtensions() {
+        return writers.keySet();
     }
 }

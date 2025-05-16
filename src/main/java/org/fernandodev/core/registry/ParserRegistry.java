@@ -8,6 +8,7 @@ import org.fernandodev.core.parsers.XmlParser;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 public class ParserRegistry {
     private static final Map<String, Parser> parsers = new HashMap<>();
@@ -19,5 +20,9 @@ public class ParserRegistry {
 
     public static Optional<Parser> getParser(String extension) {
         return Optional.ofNullable(parsers.get(extension.toLowerCase()));
+    }
+
+    public static Set<String> getSupportedExtensions() {
+        return parsers.keySet();
     }
 }
