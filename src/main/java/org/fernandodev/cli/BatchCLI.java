@@ -19,7 +19,8 @@ import java.util.Scanner;
                 ConvertCommand.class,
                 HelpCommand.class,
                 ExitCommand.class,
-                WatchDirectoryCommand.class
+                WatchDirectoryCommand.class,
+                ProcessFilesCommand.class
         }
 )
 public class BatchCLI implements Runnable{
@@ -31,7 +32,6 @@ public class BatchCLI implements Runnable{
     public static void main(String[] args) {
         System.out.println("\uD83C\uDF00 Bienvenido a BatchProcessor CLI �\uDF00");
         System.out.println("Escribe 'help' para ver los comandos disponibles.");
-        System.out.println("Hola owo" + System.getenv("DATABASE_URL"));
 
         Scanner scanner = new Scanner(System.in);
         CommandLine cmd = new CommandLine(new BatchCLI());

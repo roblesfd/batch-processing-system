@@ -14,8 +14,8 @@ public class DatabaseConfig {
     private static final String PASSWORD = getEnv("POSTGRES_PASSWORD");
 
     public static Connection getConnection() throws SQLException {
-        if (URL == null) {
-            throw new SQLException("DATABASE_URL no está definida en las variables de entorno");
+        if (URL == null || USER == null || PASSWORD == null) {
+            throw new SQLException("No se han definido alguna o todas las variables de entorno");
         }
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
