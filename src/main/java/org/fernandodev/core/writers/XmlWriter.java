@@ -1,8 +1,10 @@
 package org.fernandodev.core.writers;
 
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,6 +13,7 @@ import java.util.*;
 public class XmlWriter implements Writer {
 
     private final XmlMapper xmlMapper = new XmlMapper();
+
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
@@ -26,6 +29,12 @@ public class XmlWriter implements Writer {
         }
 
         RecordsWrapper wrapper = new RecordsWrapper(records);
-        xmlMapper.writerWithDefaultPrettyPrinter().writeValue(outputFile, wrapper);
+
+        xmlMapper.configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true);
+
+        xmlMapper
+                .writerWithDefaultPrettyPrinter()
+                .writeValue(outputFile, wrapper);
+
     }
 }

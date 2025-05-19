@@ -6,10 +6,6 @@ import org.fernandodev.core.registry.TransformerRegistry;
 
 import java.io.File;
 import java.nio.file.Paths;
-/*
-    TODO:
-    -corregir conversion incorrecta de archivos origen json
- */
 
 public class Main {
     public static void main(String[] args) throws Exception {
